@@ -1,0 +1,11 @@
+﻿
+@{
+    ViewData["Title"] = "User Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<center>
+    <h2>Seja bem-vindo Sr(a). @User.Identity.Name</h2>
+    <br><br>
+    <a href="~/Account/Logout" class="btn btn-warning">Realizar o logout</a>
+</center>

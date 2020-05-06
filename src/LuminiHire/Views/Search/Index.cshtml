@@ -1,0 +1,64 @@
+﻿@model CollegeScorecard.Models.SearchDoc
+
+
+@{
+    ViewData["Title"] = "Pesquisar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<h1>Pesquisa</h1>
+<br />
+<br />
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+        <input type="text" class="form-control" name="searchVal" placeholder="Digite aqui..." value="@Model.Term"/>
+        <small id="searchHelp" class="form-text text-muted">Digite ao menos 3 caracteres.</small>
+    </div>
+    <button type="submit" class="btn btn-primary" style="background-color: black; border: none;"
+            asp-controller="Search" asp-action="GetResult">
+        Pesquisar
+    </button>
+}
+<br />
+<br />
+
+
+@if (Model.HasSearch)
+{
+    var results = Model.Search.Documents.Select(x => x.Data).ToList();
+
+    @if (!results.Any())
+    {
+        <div class="jumbotron">
+            <h1 class="display-4">Sem resultados para: "@Model.Term"</h1>
+        </div>
+    }
+    else
+    {
+        <div class="album py-5 bg-light">
+            <div class="container">
+                <div class="col-md-12">
+                    <div class="row">
+                        @foreach (var result in results)
+                        {
+                            <div class="col-md-4">
+                                <div class="card mb-4 shadow-sm">
+                                    <div class="card-body">
+                                        <h5 class="card-title">@result.INSTNM</h5>
+                                        <hr />
+                                        <p class="card-text"><b>Cidade:</b> @result.CITY</p>
+                                        <p class="card-text"><b>Estado:</b> @result.STABBR</p>
+                                        <p class="card-text"><b>Zip:</b> @result.ZIP</p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+
